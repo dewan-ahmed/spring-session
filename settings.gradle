@@ -8,7 +8,6 @@ pluginManagement {
 // trigger1
 
 plugins {
-    id "com.gradle.develocity" version "3.17.6"
     id "io.spring.ge.conventions" version "0.0.17"
 }
 

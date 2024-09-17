@@ -271,11 +271,19 @@ class JdbcIndexedSessionRepositoryTests {
 
 	@Test
 	void createSessionDefaultMaxInactiveInterval() {
+		// Initialize the JDBC session
 		JdbcSession session = this.repository.createSession();
 
+		// Assert that the session is indeed new
 		assertThat(session.isNew()).isTrue();
-		assertThat(session.getMaxInactiveInterval()).isEqualTo(new MapSession().getMaxInactiveInterval());
+
+		// Verify that the session's max inactive interval matches the default value of a MapSession
+		MapSession defaultSession = new MapSession();
+		assertThat(session.getMaxInactiveInterval()).isEqualTo(defaultSession.getMaxInactiveInterval());
+
+		// Ensure no further interactions with jdbcOperations after the session creation
 		verifyNoMoreInteractions(this.jdbcOperations);
+
 	}
 
 	@Test

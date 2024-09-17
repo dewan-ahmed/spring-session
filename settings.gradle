@@ -8,7 +8,6 @@ pluginManagement {
 // trigger1
 
 plugins {
-    id "io.spring.ge.conventions" version "0.0.17"
 }
 
 rootProject.name = 'spring-session-build'

@@ -7,7 +7,6 @@ buildscript {
 
 	repositories {
 		gradlePluginPortal()
-		mavenCentral()
 		maven { url 'https://repo.spring.io/plugins-release/' }
         maven {
             url = 'https://repo.spring.io/plugins-snapshot'
@@ -22,7 +21,6 @@ buildscript {
 
 	dependencies {
 		classpath libs.org.springframework.boot.spring.boot.gradle.plugin
-		classpath 'io.harness:gradle-cache:0.0.4'
 	}
 }
 
@@ -32,18 +30,6 @@ plugins {
 
 apply plugin: 'io.spring.convention.root'
 apply plugin: 'io.spring.security.release'
-apply plugin: 'io.harness.gradle-cache'
-
-buildCache {
-    local {
-        // Local build cache is dangerous as it might produce inconsistent results
-        // in case developer modifies files while the build is running
-        enabled = false
-    }
-    remote(io.harness.Cache) {
-        push = System.getenv('CI') == "true"
-    }
-}
 
 group = 'org.springframework.session'
 description = 'Spring Session'

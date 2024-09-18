@@ -1,5 +1,5 @@
 # Use an official Gradle image to build the project
-FROM gradle:8.2.1-jdk17 AS build
+FROM gradle:8.10.1-jdk17 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy the entire project to the working directory
 COPY . .
 
-# Build the project
-RUN gradle build -x test
+# Build the project with full logging
+RUN gradle build -x test --warning-mode all --stacktrace
 
 # Use an official OpenJDK runtime image
 FROM openjdk:17-jdk-slim

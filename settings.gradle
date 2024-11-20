@@ -4,9 +4,16 @@ pluginManagement {
         maven { url 'https://repo.spring.io/plugins-release' }
     }
 }
-
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.harness:gradle-cache:0.0.4'
+    }
+}
 plugins {
-    id "com.gradle.develocity" version "3.17.6"
+    id "com.gradle.develocity" version "3.17.5"
     id "io.spring.ge.conventions" version "0.0.17"
 }
 
@@ -30,3 +37,18 @@ rootProject.children.each { project ->
     project.buildFileName = "${project.name}.gradle"
 }
 
+apply plugin: 'io.harness.gradle-cache'
+
+buildCache {
+    local {
+        // Local build cache is dangerous as it might produce inconsistent results
+        // in case developer modifies files while the build is running
+        enabled = false
+    }
+    remote(io.harness.Cache) {
+        accountId = System.getenv('HARNESS_ACCOUNT_ID')
+        token = System.getenv('HARNESS_PAT')
+        push = System.getenv('CI') == "true"
+        endpoint = System.getenv('HARNESS_CACHE_SERVICE_ENDPOINT')
+    }
+}
